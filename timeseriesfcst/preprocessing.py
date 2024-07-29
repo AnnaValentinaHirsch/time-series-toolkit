@@ -26,6 +26,15 @@ def split_ts(ts: pd.Series, val_start: str, test_start: str, date_column: str) -
     return train_ts, val_ts, test_ts
 
 
+# Define the function to adjust day of the year accounting for leap years
+def adjust_dayofyear(row):
+    date = row["Datum"]
+    adjusted_day = date.dayofyear
+    if date.is_leap_year and date.dayofyear > 59:  # Check for leap year and adjust the day of the year
+        adjusted_day -= 1
+    return pd.Series({"adjusted_dayofyear": adjusted_day, "month": date.month})
+
+
 # handle leap years
 def handle_leap_years(ts: pd.DataFrame) -> pd.DataFrame:
     """
