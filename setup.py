@@ -6,7 +6,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 setup(
     name="timeseriesfcst",
     packages=["timeseriesfcst"],
-    version="0.1.2",
+    version="0.1.3",
     author="Anna-Valentina Hirsch",
     author_email="a-valentina.hirsch@hotmail.com",
     description="A python toolkit for time series preprocessing, feature engineering, and forecasting",
