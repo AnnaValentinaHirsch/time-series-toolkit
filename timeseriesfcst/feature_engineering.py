@@ -1,5 +1,8 @@
 import pandas as pd
 import numpy as np
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.feature_selection import SelectFromModel
+
 
 # multiple lagged features
 def create_lagged_features(train_series: pd.Series | pd.DataFrame, val_series: pd.Series | pd.DataFrame,
@@ -191,3 +194,15 @@ def create_datetime_features(train_series: pd.Series | pd.DataFrame, val_series:
     return train_datetime, val_datetime, test_datetime
 
 
+def select_features_randomforest(train_data, train_target, n_features=30):
+    estimator = RandomForestRegressor()
+    selector = SelectFromModel(estimator, max_features=n_features)
+    selector = selector.fit(train_data, train_target)
+
+    # Get the boolean mask of selected features
+    selected_feature_indices = selector.get_support()
+
+    # Filter the columns using the mask
+    slctd_features = train_data.columns[selected_feature_indices]
+
+    return train_data[slctd_features], slctd_features
